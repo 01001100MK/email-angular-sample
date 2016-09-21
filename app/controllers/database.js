@@ -105,9 +105,42 @@ exports.get_draft_emails = function(req, res) {
         });
 };
 
-// Get email from outbox that detail is viewed
+// Get email from draft that detail is viewed
 exports.get_draft_email = function(req, res) {
     var query = connection.query('SELECT * FROM Draft WHERE id = ?', req.params.id,
+        function(err, result) {
+            if (err) {
+                return res.status(400).send(err);
+            } else {
+                if (result.length > 0) {
+                    return res.status(200).send(result[0]);
+                } else {
+                    return res.status(300).send('');
+                }
+            }
+        });
+};
+
+//  Get emails from trash
+exports.get_trash_emails = function(req, res) {
+    var query = connection.query('SELECT * FROM Trash',
+        function(err, result) {
+            if (err) {
+                return res.status(400).send(err);
+            } else {
+                if (result.length > 0) {
+                    return res.status(200).send(result);
+                } else {
+                    return res.status(300).send('');
+                }
+            }
+        });
+};
+
+// Get email from trash that detail is viewed
+exports.get_trash_email = function(req, res) {
+    console.log(req.params.id);
+    var query = connection.query('SELECT * FROM Trash WHERE id = ?', req.params.id,
         function(err, result) {
             if (err) {
                 return res.status(400).send(err);
@@ -143,6 +176,20 @@ exports.save_draft = function(req, res) {
     });
 };
 
+// Send deleted mail to trash
+exports.send_to_trash = function(req, res) {
+    delete req.body.id;
+    delete req.body.datetime;
+    
+    var query = connection.query('INSERT INTO Trash SET ?', req.body, function(err, result) {
+        if (err) {
+            return res.status(400).send(err);
+        } else {
+            return res.status(200).send(result);
+        }
+    })
+};
+
 // Update draft
 exports.update_draft = function(req, res) {
     var query = connection.query('UPDATE Draft SET ? WHERE id = ?', [req.body, req.params.id],
@@ -155,9 +202,33 @@ exports.update_draft = function(req, res) {
         });
 };
 
-// Delete draft after sending
+// Delete draft mail by id
 exports.delete_draft = function(req, res) {
     var query = connection.query('DELETE FROM Draft WHERE id = ?', req.params.id,
+        function(err, result) {
+            if (err) {
+                return res.status(400).send(err);
+            } else {
+                return res.status(200).send(result);
+            }
+        });
+};
+
+// Delete inbox mail by id
+exports.delete_inbox = function(req, res) {
+    var query = connection.query('DELETE FROM Inbox WHERE id = ?', req.params.id,
+        function(err, result) {
+            if (err) {
+                return res.status(400).send(err);
+            } else {
+                return res.status(200).send(result);
+            }
+        });
+};
+
+// Delete outbox mail by id
+exports.delete_outbox = function(req, res) {
+    var query = connection.query('DELETE FROM Outbox WHERE id = ?', req.params.id,
         function(err, result) {
             if (err) {
                 return res.status(400).send(err);

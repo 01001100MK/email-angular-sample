@@ -8,9 +8,9 @@ angular.module('app.directives.detail', ['inboxService'])
             // replace: true,
             templateUrl: 'components/detail/template.html',
             controller: ['$scope', '$http', '$location', '$routeParams',
-                'Users', 'Inbox', 'Outbox', 'Draft', 'Detail',
+                'Users', 'Inbox', 'Outbox', 'Draft', 'Detail', 'Trash',
                 function($scope, $http, $location, $routeParams,
-                    Users, Inbox, Outbox, Draft, Detail) {
+                    Users, Inbox, Outbox, Draft, Detail, Trash) {
                     // Initialize
                     $scope.mail = {};
 
@@ -31,8 +31,12 @@ angular.module('app.directives.detail', ['inboxService'])
                         Outbox.getDetail($routeParams.id).success(function(email) {
                             $scope.mail = email;
                         });
-                    } else {
+                    } else if ($scope.route === 'draft') {
                         Draft.getDetail($routeParams.id).success(function(email) {
+                            $scope.mail = email;
+                        });
+                    } else {
+                        Trash.getDetail($routeParams.id).success(function(email) {
                             $scope.mail = email;
                         });
                     }

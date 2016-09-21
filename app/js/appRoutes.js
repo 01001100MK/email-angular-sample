@@ -33,6 +33,10 @@ angular.module('appRoutes', [])
         template: '<div><side-menu></side-menu></div>'
     })
 
+    .when('/trash', {
+        template: '<div><side-menu></side-menu></div>'
+    })
+    
     .otherwise({
         redirectTo: '/login'
     });

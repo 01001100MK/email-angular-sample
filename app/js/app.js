@@ -6,6 +6,8 @@ angular.module('myApp', [
     'outboxService',
     'draftService',
     'detailService',
+    'trashService',
+    'maincontentService',
     'app.directives.login',
     'app.directives.detail',
     'app.directives.compose',
