@@ -1,0 +1,47 @@
+<div class="modal show" id="modalCompose">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" ng-click="close()" class="close" data-dismiss="modal" aria-hidden="true">X</button>
+        <h4 class="modal-title">View Detail</h4>
+      </div>
+      <div class="modal-body">
+        <form role="form" class="form-horizontal">
+          <div class="form-group">
+            <label class="col-sm-2">From</label>
+            <div class="col-sm-10"><input type="text" class="form-control"
+              ng-model="mail.sender" ng-readonly="!isDraft"></div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-2">To</label>
+            <div class="col-sm-10"><input type="text" class="form-control"
+              ng-model="mail.receiver" ng-readonly="!isDraft"></div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-2">Subject</label>
+            <div class="col-sm-10"><input type="text" class="form-control"
+              ng-model="mail.subject" ng-readonly="!isDraft"></div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-12">Message</label>
+            <div class="col-sm-12"><textarea class="form-control" rows="11"
+              ng-model="mail.detail" ng-readonly="!isDraft"></textarea></div>
+          </div>
+        </form>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" ng-click="close()" class="btn btn-default btn-danger pull-left">Close</button>
+        <button type="button" ng-click="trash()" class="btn btn-danger pull-left">
+          <span class="fa fa-trash-o"></span>
+        </button>
+        <button type="button" ng-click="updateDraft()" ng-show="isDraft"
+          class="btn btn-warning pull-left">Save Draft</button>
+        <button type="button" ng-click="send()" ng-show="isDraft"
+          class="btn btn-primary">Send<i class="fa fa-arrow-circle-right  fa-lg"></i></button>
+      </div>
+    </div>
+    <!-- .modal-content -->
+  </div>
+  <!-- .modal-dialog -->
+</div>

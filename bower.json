@@ -1,0 +1,21 @@
+{
+  "name": "email-inbox",
+  "description": "",
+  "main": "",
+  "moduleType": [],
+  "ignore": [
+    "**/.*",
+    "test",
+    "/app/libs",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "~2.1.4",
+    "angular": "~1.4.7",
+    "angular-route": "~1.4.7",
+    "angular-bootstrap": "~0.14.3",
+    "bootstrap": "~3.3.5",
+    "angular-cookies": "~1.4.7",
+    "fontawesome": "~4.5.0"
+  }
+}
