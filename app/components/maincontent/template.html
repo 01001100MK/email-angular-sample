@@ -70,7 +70,7 @@
     </div>
     <div class="table-inbox-wrap ">
       <table class="table table-inbox table-hover">
-        <tbody ng-repeat="email in emails">
+        <tbody ng-repeat="email in emails | orderBy:'datetime':true">
           <tr class="unread">
             <td class="inbox-small-cells"><input type="checkbox" class="mail-checkbox"></td>
             <td class="inbox-small-cells"><i class="fa fa-star"></i></td>

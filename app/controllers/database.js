@@ -63,30 +63,32 @@ exports.get_inbox_email = function(req, res) {
 
 // Get emails from outbox for username
 exports.get_outbox_emails = function(req, res) {
-    var query = connection.query('select * from Outbox where sender = ?', req.params.username, function(err, result) {
-        if (err) {
-            return res.status(400).send(err);
-        }
-        if (result.length > 0) {
-            return res.status(200).send(result);
-        } else {
-            return res.status(201).send('');
-        }
-    });
+    var query = connection.query('select * from Outbox where sender = ?', req.params.username,
+        function(err, result) {
+            if (err) {
+                return res.status(400).send(err);
+            }
+            if (result.length > 0) {
+                return res.status(200).send(result);
+            } else {
+                return res.status(201).send('');
+            }
+        });
 };
 
 // Get email from outbox that detail is viewed
 exports.get_outbox_email = function(req, res) {
-    var query = connection.query('select * from Outbox where id = ? ', req.params.id, function(err, result) {
-        if (err) {
-            return res.status(400).send(err);
-        }
-        if (result.length > 0) {
-            return res.status(200).send(result[0]);
-        } else {
-            return res.status(201).send('');
-        }
-    });
+    var query = connection.query('select * from Outbox where id = ? ', req.params.id,
+        function(err, result) {
+            if (err) {
+                return res.status(400).send(err);
+            }
+            if (result.length > 0) {
+                return res.status(200).send(result[0]);
+            } else {
+                return res.status(201).send('');
+            }
+        });
 };
 
 // Get emails from draft for username
@@ -179,8 +181,7 @@ exports.save_draft = function(req, res) {
 // Send deleted mail to trash
 exports.send_to_trash = function(req, res) {
     delete req.body.id;
-    delete req.body.datetime;
-    
+    req.body.datetime = new Date(req.body.datetime);
     var query = connection.query('INSERT INTO Trash SET ?', req.body, function(err, result) {
         if (err) {
             return res.status(400).send(err);

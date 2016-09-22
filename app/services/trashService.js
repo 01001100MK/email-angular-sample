@@ -15,6 +15,7 @@ angular.module("trashService", [])
         // Send to trash and delete from the table that is trashed.
         trashService.sendToTrash = function(email) {
             var source = Users.getSource();
+            email.source = source;
             $http.post('/api/trash/', email).success(function() {
                 $http.delete('/api/' +  source + '/' + email.id).success(function() {
                     return true;
