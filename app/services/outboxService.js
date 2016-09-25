@@ -18,7 +18,7 @@ angular.module("outboxService", [])
     outboxService.post = function(email) {
         return $http.post('/api/outbox/', email);
     }
-
+    
     // return our entire outboxService object
     return outboxService;
 

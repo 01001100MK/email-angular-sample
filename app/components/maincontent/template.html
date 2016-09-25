@@ -78,9 +78,20 @@
             <td class="view-message dont-show"><a href="#">{{ email.subject }}</a></td>
             <td class="view-message"><a href="#">{{ email.detail | limitTo: 20 }} ...</a></td>
             <td class="view-message text-right">{{ email.datetime | date }}</td>
-            <td class="view-message inbox-small-cells"><button ng-click="toDetail(email.id)" class="btn btn-success">detail</button></td>
-            <td class="view-message  inbox-small-cells">
-              <button ng-click="trash(email)" class="btn btn-danger"><span class="fa fa-trash-o"></span></button>
+            <td class="view-message inbox-small-cells">
+              <button ng-click="toDetail(email.id)" class="btn btn-success">
+                <span class="fa fa-eye"></span>
+              </button>
+            </td>
+            <td class="view-message  inbox-small-cells" ng-show="!isTrash">
+              <button ng-click="trash(email)" class="btn btn-danger">
+                <span class="fa fa-trash-o"></span>
+              </button>
+            </td>
+            <td class="view-message inbox-small-cells" ng-show="isTrash">
+              <button ng-click="restore(email)" class="btn btn-warning">
+                <span class="fa fa-undo"></span>
+              </button>
             </td>
           </tr>
         </tbody>

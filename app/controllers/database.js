@@ -158,6 +158,9 @@ exports.get_trash_email = function(req, res) {
 
 // Add a New message
 exports.send_email = function(req, res) {
+    delete req.body.id;
+    delete req.body.source;
+    req.body.datetime = new Date(req.body.datetime);
     var query = connection.query('INSERT INTO Outbox SET ?', req.body, function(err, result) {
         if (err) {
             return res.status(400).send(err);
@@ -230,6 +233,17 @@ exports.delete_inbox = function(req, res) {
 // Delete outbox mail by id
 exports.delete_outbox = function(req, res) {
     var query = connection.query('DELETE FROM Outbox WHERE id = ?', req.params.id,
+        function(err, result) {
+            if (err) {
+                return res.status(400).send(err);
+            } else {
+                return res.status(200).send(result);
+            }
+        });
+};
+
+exports.delete_trash = function(req, res) {
+    var query = connection.query('DELETE FROM Trash WHERE id = ?', req.params.id,
         function(err, result) {
             if (err) {
                 return res.status(400).send(err);

@@ -1,5 +1,5 @@
 {
-  "name": "rest-api",
+  "name": "email",
   "version": "1.0.0",
   "description": "RESTful API with mySQL",
   "main": "server.js",
@@ -10,14 +10,14 @@
     "REST",
     "SQL"
   ],
-  "author": "nay",
+  "author": "light",
   "license": "MIT",
 
   "dependencies": {
     "express": "latest",
     "mysql": "latest",
     "body-parser": "latest",
-  	"method-override" : "*"    
+  	"method-override" : "*"
   },
   "devDependencies": {
     "chai": "latest",

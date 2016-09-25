@@ -17,25 +17,21 @@ module.exports = function(app) {
 
     app.get(prefix + "/inbox/:username", database.get_inbox_emails);
     app.get(prefix + "/inbox/detail/:id", database.get_inbox_email);
+    app.delete(prefix + "/inbox/:id", database.delete_inbox);
 
     app.get(prefix + "/outbox/:username", database.get_outbox_emails);
     app.get(prefix + "/outbox/detail/:id", database.get_outbox_email);
+    app.post(prefix + "/outbox/",  database.send_email);
+    app.delete(prefix + "/outbox/:id", database.delete_outbox);
 
     app.get(prefix + "/draft/:username", database.get_draft_emails);
     app.get(prefix + "/draft/detail/:id",  database.get_draft_email);
+    app.put(prefix + "/draft/:id", database.update_draft);
+    app.post(prefix + "/draft/", database.save_draft);
+    app.delete(prefix + "/draft/:id", database.delete_draft);
 
     app.get(prefix + "/trash/:username", database.get_trash_emails);
     app.get(prefix + "/trash/detail/:id", database.get_trash_email);
-
-    // API Put Endpoints
-    app.put(prefix + "/draft/:id", database.update_draft);
-
-    // API Post Endpoints
-    app.post(prefix + "/outbox/",  database.send_email);
-    app.post(prefix + "/draft/", database.save_draft);
     app.post(prefix + "/trash/",  database.send_to_trash);
-    // API Delete Endpoints
-    app.delete(prefix + "/draft/:id", database.delete_draft);
-    app.delete(prefix + "/inbox/:id", database.delete_inbox);
-    app.delete(prefix + "/outbox/:id", database.delete_outbox);
+    app.delete(prefix + "/trash/:id", database.delete_trash);
 };

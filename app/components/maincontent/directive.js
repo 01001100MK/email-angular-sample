@@ -13,27 +13,10 @@ angular.module('app.directives.maincontent', ['inboxService', 'userService'])
                     var route = Users.getSource();
                     $scope.emails = [];
 
-                    var getMails = function() {
-                        if (route === 'inbox') {
-                            Inbox.get(user).success(function(emails) {
-                                $scope.emails = emails;
-                            });
-                        } else if (route === 'outbox') {
-                            Outbox.get(user).success(function(emails) {
-                                $scope.emails = emails;
-                            });
-                        } else if (route === 'draft') {
-                            Draft.get(user).success(function(emails) {
-                                $scope.emails = emails;
-                            });
-                        } else {
-                            Trash.get(user).success(function(emails) {
-                                $scope.emails = emails;
-                            });
-                        }
-                    };
-
-                    getMails();
+                    // getMails();
+                    Maincontent.getEmails(route, user, function(result) {
+                        $scope.emails = result;
+                    });
 
                     // Check user logged in or not
                     if (!Users.isLoggedIn()) {
@@ -47,18 +30,29 @@ angular.module('app.directives.maincontent', ['inboxService', 'userService'])
 
                     // Send to trash
                     $scope.trash = function(email) {
-                        Trash.sendToTrash(email);
-
-                        // Refresh email List
-                        getMails();
+                        Trash.sendToTrash(email, function(res) {
+                            // Refresh email List
+                            Maincontent.getEmails(route, user, function(result) {
+                                $scope.emails = result;
+                            });
+                        });
                     };
 
-                    // Read message
+                    $scope.restore = function(email) {
+                        Trash.restore(email, function(res) {
+                            Maincontent.getEmails(route, user, function(result) {
+                                $scope.emails = result;
+                            });
+                        });
+                    }
+                        // Read message
                     $scope.logOut = function() {
                         Users.logOut();
                         $location.path('/login');
                     }
 
+                    //  Determine whether it's trash page and hide Trash icon
+                    $scope.isTrash = Trash.isTrash();
                 }
             ]
         };
