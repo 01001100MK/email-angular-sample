@@ -17,6 +17,7 @@ module.exports = function(app) {
 
     app.get(prefix + "/inbox/:username", database.get_inbox_emails);
     app.get(prefix + "/inbox/detail/:id", database.get_inbox_email);
+    app.post(prefix + "/inbox/", database.save_inbox);
     app.delete(prefix + "/inbox/:id", database.delete_inbox);
 
     app.get(prefix + "/outbox/:username", database.get_outbox_emails);

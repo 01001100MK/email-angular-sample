@@ -13,5 +13,10 @@ angular.module("inboxService", [])
         return $http.get('/api/inbox/detail/' + id);
     };
 
+    // Insert email into Inbox table
+    inboxService.post = function(email) {
+        return $http.post('/api/inbox/', email);
+    };
+
     return inboxService;
 }]);

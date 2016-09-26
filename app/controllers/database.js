@@ -172,8 +172,30 @@ exports.send_email = function(req, res) {
 
 // Save draft for the first time
 exports.save_draft = function(req, res) {
+    // Delete id and source field if restore from trash
+    delete req.body.id;
+    delete req.body.source;
+    req.body.datetime = new Date(req.body.datetime);
+    
     var query = connection.query('INSERT INTO Draft SET ?', req.body, function(err, result) {
         if (err) {
+            return res.status(400).send(err);
+        } else {
+            return res.status(200).send(result);
+        }
+    });
+};
+
+// Save email into Inbox table
+exports.save_inbox = function(req, res) {
+    // Delete id and source field if restore from trash
+    delete req.body.id;
+    delete req.body.source;
+    req.body.datetime = new Date(req.body.datetime);
+
+    var query = connection.query('INSERT INTO Inbox SET ?', req.body, function(err, result) {
+        if (err) {
+            console.error(err);
             return res.status(400).send(err);
         } else {
             return res.status(200).send(result);

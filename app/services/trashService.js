@@ -33,7 +33,9 @@ angular.module("trashService", [])
 
                 if (source === 'inbox') {
                     Inbox.post(email).success(function() {
-
+                        trashService.delete(email.id).success(function(res) {
+                            callback(res);
+                        });
                     });
                 } else if (source === 'outbox') {
                     Outbox.post(email).success(function() {
@@ -42,7 +44,11 @@ angular.module("trashService", [])
                         });
                     });
                 } else if (source === 'draft') {
-
+                    Draft.post(email).success(function() {
+                        trashService.delete(email.id).success(function(res) {
+                            callback(res);
+                        });
+                    });
                 }
             };
 
