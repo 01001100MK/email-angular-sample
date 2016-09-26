@@ -101,7 +101,7 @@ exports.get_draft_emails = function(req, res) {
                 if (result.length > 0) {
                     return res.status(200).send(result);
                 } else {
-                    return res.status(300).send('');
+                    return res.status(201).send('');
                 }
             }
         });
@@ -117,7 +117,7 @@ exports.get_draft_email = function(req, res) {
                 if (result.length > 0) {
                     return res.status(200).send(result[0]);
                 } else {
-                    return res.status(300).send('');
+                    return res.status(201).send('');
                 }
             }
         });
@@ -133,7 +133,7 @@ exports.get_trash_emails = function(req, res) {
                 if (result.length > 0) {
                     return res.status(200).send(result);
                 } else {
-                    return res.status(300).send('');
+                    return res.status(201).send('');
                 }
             }
         });
@@ -150,7 +150,7 @@ exports.get_trash_email = function(req, res) {
                 if (result.length > 0) {
                     return res.status(200).send(result[0]);
                 } else {
-                    return res.status(300).send('');
+                    return res.status(201).send('');
                 }
             }
         });
@@ -176,7 +176,7 @@ exports.save_draft = function(req, res) {
     delete req.body.id;
     delete req.body.source;
     req.body.datetime = new Date(req.body.datetime);
-    
+
     var query = connection.query('INSERT INTO Draft SET ?', req.body, function(err, result) {
         if (err) {
             return res.status(400).send(err);
