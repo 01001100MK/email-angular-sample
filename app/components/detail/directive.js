@@ -12,34 +12,24 @@ angular.module('app.directives.detail', ['inboxService'])
                 function($scope, $http, $location, $routeParams,
                     Users, Inbox, Outbox, Draft, Detail, Trash) {
                     // Initialize
-                    $scope.mail = {};
+                    $scope.email = {};
 
                     // Check user logged in or not
                     if (!Users.isLoggedIn()) {
                         $location.path('/login');
                     }
 
+                    // Draft detail needs save draft button
                     $scope.isDraft = Detail.isDraft();
 
+                    // Trash detail needs restore icon
+                    $scope.isTrash = Trash.isTrash();
+
                     // Get Message detail by checking previous route
-                    $scope.route = Users.getSource();
-                    if ($scope.route === 'inbox') {
-                        Inbox.getDetail($routeParams.id).success(function(email) {
-                            $scope.mail = email;
-                        });
-                    } else if ($scope.route === 'outbox') {
-                        Outbox.getDetail($routeParams.id).success(function(email) {
-                            $scope.mail = email;
-                        });
-                    } else if ($scope.route === 'draft') {
-                        Draft.getDetail($routeParams.id).success(function(email) {
-                            $scope.mail = email;
-                        });
-                    } else {
-                        Trash.getDetail($routeParams.id).success(function(email) {
-                            $scope.mail = email;
-                        });
-                    }
+                    var route = Users.getSource();
+                    Detail.get(route, $routeParams.id, function(email) {
+                        $scope.email = email;
+                    });
 
                     // close the detail and go back to previous route
                     $scope.close = function() {
@@ -47,15 +37,9 @@ angular.module('app.directives.detail', ['inboxService'])
                     };
 
                     $scope.send = function() {
-                        // draft id can't be used
-                        var draftID = $scope.mail.id;
-                        delete $scope.mail.id;
-                        // draft date can't be used
-                        delete $scope.mail.datetime
-
-                        Outbox.post($scope.mail).success(function() {
+                        Outbox.post($scope.email).success(function() {
                             // Delete draft after sending
-                            Draft.delete(draftID).success(function() {
+                            Draft.delete($scope.email.id).success(function() {
                                 $location.path('/' + Users.getSource());
                             });
                         });
@@ -63,11 +47,25 @@ angular.module('app.directives.detail', ['inboxService'])
                     };
 
                     $scope.updateDraft = function() {
-                        // delete $scope.mail.id;
-                        delete $scope.mail.datetime;
+                        // delete $scope.email.id;
+                        delete $scope.email.datetime;
 
-                        Draft.put($scope.mail, $routeParams.id).success(function() {
+                        Draft.put($scope.email, $routeParams.id).success(function() {
                             $location.path('/' + Users.getSource());
+                        });
+                    };
+
+                    // Send to trash
+                    $scope.trash = function(email) {
+                        Trash.sendToTrash(email, function(res) {
+                            $scope.close();
+                        });
+                    };
+
+                    // Restore trash email
+                    $scope.restore = function(email) {
+                        Trash.restore(email, function(res) {
+                            $scope.close();
                         });
                     };
                 }

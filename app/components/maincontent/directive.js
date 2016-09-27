@@ -53,6 +53,10 @@ angular.module('app.directives.maincontent', ['inboxService', 'userService'])
 
                     //  Determine whether it's trash page and hide Trash icon
                     $scope.isTrash = Trash.isTrash();
+
+                    // Inbox needs to show sender
+                    $scope.isInbox = Inbox.isInbox();
+
                 }
             ]
         };

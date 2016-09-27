@@ -7,7 +7,6 @@ angular.module("maincontentService", [])
 
             // Get emails from respective table according to route
             maincontentService.getEmails = function(route, user, callback) {
-                var result = [];
                 if (route === 'inbox') {
                     Inbox.get(user).success(function(emails) {
                         callback(emails);
@@ -25,8 +24,6 @@ angular.module("maincontentService", [])
                         callback(emails);
                     });
                 }
-
-                // return result;
             };
 
             return maincontentService;

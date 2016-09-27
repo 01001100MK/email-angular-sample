@@ -141,7 +141,6 @@ exports.get_trash_emails = function(req, res) {
 
 // Get email from trash that detail is viewed
 exports.get_trash_email = function(req, res) {
-    console.log(req.params.id);
     var query = connection.query('SELECT * FROM Trash WHERE id = ?', req.params.id,
         function(err, result) {
             if (err) {
@@ -158,9 +157,14 @@ exports.get_trash_email = function(req, res) {
 
 // Add a New message
 exports.send_email = function(req, res) {
+    // Delete id and source field if restore from trash
     delete req.body.id;
     delete req.body.source;
-    req.body.datetime = new Date(req.body.datetime);
+
+    // Check whether new outbox mail or restore to set datetime
+    req.body.datetime = typeof req.body.time === 'undefined' ?
+        new Date() : new Date(req.body.datetime);
+
     var query = connection.query('INSERT INTO Outbox SET ?', req.body, function(err, result) {
         if (err) {
             return res.status(400).send(err);
@@ -175,10 +179,14 @@ exports.save_draft = function(req, res) {
     // Delete id and source field if restore from trash
     delete req.body.id;
     delete req.body.source;
-    req.body.datetime = new Date(req.body.datetime);
+
+    // Check whether new draft or restore to set datetime
+    req.body.datetime = typeof req.body.time === 'undefined' ?
+        new Date() : new Date(req.body.datetime);
 
     var query = connection.query('INSERT INTO Draft SET ?', req.body, function(err, result) {
         if (err) {
+            console.error(err);
             return res.status(400).send(err);
         } else {
             return res.status(200).send(result);

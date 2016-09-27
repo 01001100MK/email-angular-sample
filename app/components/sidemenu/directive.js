@@ -12,6 +12,11 @@ angular.module('app.directives.sidemenu', [])
                         $location.path('/login');
                     }
 
+                    $scope.logOut = function() {
+                      Users.logOut();
+                      $location.path('/login');
+                    }
+
                     // default landing page
                     // Users.setSource('inbox');
                     $scope.changeRoute = function(route) {
@@ -25,11 +30,6 @@ angular.module('app.directives.sidemenu', [])
                     };
 
                     $scope.route =  Users.getSource();
-
-                    $scope.logOut = function() {
-                        Users.logOut();
-                        $location.path('/login');
-                    }
                 }
             ]
         };
