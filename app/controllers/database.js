@@ -214,9 +214,11 @@ exports.save_inbox = function(req, res) {
 // Send deleted mail to trash
 exports.send_to_trash = function(req, res) {
     delete req.body.id;
+    delete req.body.star;
     req.body.datetime = new Date(req.body.datetime);
     var query = connection.query('INSERT INTO Trash SET ?', req.body, function(err, result) {
         if (err) {
+	    console.error(err);
             return res.status(400).send(err);
         } else {
             return res.status(200).send(result);
@@ -281,4 +283,97 @@ exports.delete_trash = function(req, res) {
                 return res.status(200).send(result);
             }
         });
+};
+
+// Get Starred emails from Inbox, Outbox, Draft
+exports.get_star_emails = function(req, res) {
+    var query = connection.query('SELECT * FROM Inbox WHERE star = 1 UNION SELECT * FROM Outbox '
+		+ 'WHERE star = 1 UNION SELECT * FROM Draft WHERE star = 1', 
+		function(err, result) {
+	    	if (err) {
+				return res.status(400).send(err);
+	    	} else {
+				if (result.length > 0) {
+		    		return res.status(200).send(result);
+				} else {
+					return res.status(201).send('');
+				}
+			}
+		});
+};
+
+
+// Update Inbox, star = 1, star the email
+exports.star_on_inbox = function(req, res) {
+	var query = connection.query('UPDATE Inbox SET star = 1 WHERE id = ?', req.params.id,
+		function(err, result) {
+			if (err) {
+				return res.status(400).send(err);			
+			} else {
+				return res.status(200).send(result);			
+			}
+		}
+	);
+};
+
+// Update Inbox, star = 0, unstar
+exports.star_off_inbox = function(req, res) {
+	var query = connection.query('UPDATE Inbox SET star = 0 WHERE id = ?', req.params.id,
+		function(err, result) {
+			if (err) {
+				return res.status(400).send(err);				
+			} else {
+				return res.status(200).send(result);
+			}
+	});
+};
+
+// Update Outbox, star = 1, star the email
+exports.star_on_outbox = function(req, res) {
+	var query = connection.query('UPDATE Outbox SET star = 1 WHERE id = ?', req.params.id,
+		function(err, result) {
+			if (err) {
+				return res.status(400).send(err);			
+			} else {
+				return res.status(200).send(result);			
+			}
+		}
+	);
+};
+
+// Update Outbox, star = 0, unstar
+exports.star_off_outbox = function(req, res) {
+	var query = connection.query('UPDATE Outbox SET star = 0 WHERE id = ?', req.params.id,
+		function(err, result) {
+			if (err) {
+				return res.status(400).send(err);				
+			} else {
+				return res.status(200).send(result);
+			}
+	});
+};
+
+// Update Draft, star = 1, star the email
+exports.star_on_draft = function(req, res) {
+	var query = connection.query('UPDATE Draft SET star = 1 WHERE id = ?', req.params.id,
+		function(err, result) {
+			if (err) {
+				return res.status(400).send(err);			
+			} else {
+				return res.status(200).send(result);			
+			}
+		}
+	);
+};
+
+// Update Draft, star = 0, unstar
+exports.star_off_draft = function(req, res) {
+	var query = connection.query('UPDATE Draft SET star = 0 WHERE id = ?', req.params.id,
+		function(err, result) {
+			if (err) {
+				return res.status(400).send(err);				
+			} else {
+				return res.status(200).send(result);
+			}
+	});
 };

@@ -7,10 +7,12 @@ angular.module('myApp', [
     'draftService',
     'detailService',
     'trashService',
+    'starService',
     'maincontentService',
     'app.directives.login',
     'app.directives.detail',
     'app.directives.compose',
     'app.directives.sidemenu',
     'app.directives.maincontent',
+    'app.directives.star',
 ]);

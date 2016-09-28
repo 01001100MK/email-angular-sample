@@ -1,3 +1,4 @@
+
 <section class="panel">
   <header class="panel-heading wht-bg">
     <h4 class="gen-case">{{ route | uppercase }}
@@ -73,20 +74,19 @@
         <tbody ng-repeat="email in emails | orderBy:'datetime':true">
           <tr class="unread">
             <td class="inbox-small-cells"><input type="checkbox" class="mail-checkbox"></td>
-            <td class="view-message">
-			  <button ng-click="toggleStar(email)" class="btn btn-default" ng-class="{ 'btn-warning': isStarred(email) }">
+           	<td class="view-message">
+			  <button ng-click="starOff(email)" class="btn btn-warning">
 				<span class="fa fa-star"></span>
 			  </button>
 			</td>
-            <td class="view-message dont-show" ng-show="isInbox"><a href="#">{{ email.sender }}</a></td>
-            <td class="view-message dont-show" ng-show="!isInbox"><a href="#">{{ email.receiver }}</a></td>
+            <td class="view-message dont-show"><a href="#">{{ email.sender }}</a></td>
+            <td class="view-message dont-show"><a href="#">{{ email.receiver }}</a></td>
             <td class="view-message dont-show"><a href="#">{{ email.subject }}</a></td>
             <td class="view-message" ng-show="!isTrash"><a href="#">{{ email.detail | limitTo: 20 }} ...</a></td>
-            <td class="view-message" ng-show="isTrash"><a href="#">{{ email.source }} </a></td>
+            <td class="view-message" ng-show="isTrash"><a href="#">{{ email.star }} </a></td>
             <td class="view-message text-right">{{ email.datetime | date }}</td>
-			<td class="view-message text-right">{{ email.star }}</td>
             <td class="view-message inbox-small-cells">
-              <button ng-click="toDetail(email.id)" class="btn btn-success">
+              <button ng-click="toDetail(email)" class="btn btn-success">
                 <span class="fa fa-eye"></span>
               </button>
             </td>
@@ -107,3 +107,4 @@
     </div>
   </div>
 </section>
+

@@ -24,11 +24,17 @@ angular.module("detailService", [])
                     Draft.getDetail(id).success(function(email) {
                         callback(email);
                     });
-                } else {
+                } else if (route === 'trash') {
                     Trash.getDetail(id).success(function(email) {
                         callback(email);
                     });
-                }
+                } else {
+					console.log('Get star email');
+					var source = $cookies.get('starsource');
+					$http.get('/api/' + source + '/' + id).success(function(email) {
+						callback(email);					
+					});
+				}
             };
 
             return detailService;

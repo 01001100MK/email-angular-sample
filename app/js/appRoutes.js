@@ -37,6 +37,10 @@ angular.module('appRoutes', [])
         template: '<div><side-menu></side-menu></div>'
     })
     
+    .when('/star', {
+	template: '<div><star-form></star-form></div>'
+    })
+
     .otherwise({
         redirectTo: '/login'
     });

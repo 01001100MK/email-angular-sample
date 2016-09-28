@@ -30,6 +30,9 @@ angular.module('app.directives.sidemenu', [])
                     };
 
                     $scope.route =  Users.getSource();
+					
+					// Need refactor
+					$scope.isStar = Users.getSource() === 'star';
                 }
             ]
         };
