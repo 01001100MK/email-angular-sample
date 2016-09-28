@@ -13,8 +13,8 @@ angular.module('app.directives.sidemenu', [])
                     }
 
                     $scope.logOut = function() {
-                      Users.logOut();
-                      $location.path('/login');
+                        Users.logOut();
+                        $location.path('/login');
                     }
 
                     // default landing page
@@ -29,10 +29,10 @@ angular.module('app.directives.sidemenu', [])
                         $location.path('/compose');
                     };
 
-                    $scope.route =  Users.getSource();
-					
-					// Need refactor
-					$scope.isStar = Users.getSource() === 'star';
+                    $scope.route = Users.getSource();
+
+                    // Need refactor
+                    $scope.isStar = Users.getSource() === 'star';
                 }
             ]
         };

@@ -5,10 +5,10 @@ angular.module('app.directives.maincontent', ['inboxService', 'userService'])
         return {
             restrict: 'E',
             templateUrl: 'components/maincontent/template.html',
-            controller: ['$scope', '$http', '$location', 'Inbox', 'Outbox', 
-				'Draft', 'Trash', 'Users', 'Maincontent', 'Star',
-                function($scope, $http, $location, Inbox, Outbox, 
-					Draft, Trash, Users, Maincontent, Star) {
+            controller: ['$scope', '$http', '$location', 'Inbox', 'Outbox',
+                'Draft', 'Trash', 'Users', 'Maincontent', 'Star',
+                function($scope, $http, $location, Inbox, Outbox,
+                    Draft, Trash, Users, Maincontent, Star) {
                     // Initialize
                     $scope.mail = {};
                     var user = Users.getUserEmail();
@@ -41,12 +41,12 @@ angular.module('app.directives.maincontent', ['inboxService', 'userService'])
                     };
 
                     $scope.restore = function(email) {
-                        Trash.restore(email, function(res) {
-                            Maincontent.getEmails(route, user, function(result) {
-                                $scope.emails = result;
+                            Trash.restore(email, function(res) {
+                                Maincontent.getEmails(route, user, function(result) {
+                                    $scope.emails = result;
+                                });
                             });
-                        });
-                    }
+                        }
                         // Read message
                     $scope.logOut = function() {
                         Users.logOut();
@@ -59,28 +59,28 @@ angular.module('app.directives.maincontent', ['inboxService', 'userService'])
                     // Inbox needs to show sender
                     $scope.isInbox = Inbox.isInbox();
 
-					// is the email starred?
-					$scope.isStarred = function(email) {
-						return email.star === 1;
-					};
+                    // is the email starred?
+                    $scope.isStarred = function(email) {
+                        return email.star === 1;
+                    };
 
-					// toggle star on/off
-					$scope.toggleStar = function(email) {
-						var source = Users.getSource();
-						if (email.star === 0) {
-							Star.toggleOn(email.id, source).success(function(res) {
-								Maincontent.getEmails(route,user, function(result) {
-									$scope.emails = result;
-								});
-							});
-						} else {
-							Star.toggleOff(email.id, source).success(function(res) {
-								Maincontent.getEmails(route,user, function(result) {
-									$scope.emails = result;
-								});
-							});
-						}
-					};
+                    // toggle star on/off
+                    $scope.toggleStar = function(email) {
+                        var source = Users.getSource();
+                        if (email.star === 0) {
+                            Star.toggleOn(email.id, source).success(function(res) {
+                                Maincontent.getEmails(route, user, function(result) {
+                                    $scope.emails = result;
+                                });
+                            });
+                        } else {
+                            Star.toggleOff(email.id, source).success(function(res) {
+                                Maincontent.getEmails(route, user, function(result) {
+                                    $scope.emails = result;
+                                });
+                            });
+                        }
+                    };
 
                 }
             ]

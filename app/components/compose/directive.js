@@ -17,6 +17,12 @@ angular.module('app.directives.compose', ['outboxService', 'userService'])
                 // Send
                 $scope.send = function() {
                     $scope.mail.sender = Users.getUserEmail();
+
+                    // delete existing date of draft
+                    delete $scope.mail.datetime;
+                    
+                    $scope.mail.datetime = new Date();
+
                     Outbox.post($scope.mail).success(function() {
                         $location.path('/' + Users.getSource());
                     });

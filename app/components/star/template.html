@@ -1,4 +1,37 @@
-
+<section id="main-content">
+  <section class="wrapper">
+    <!-- page start-->
+    <div class="row mt">
+      <div class="col-sm-3">
+        <section class="panel">
+          <div class="panel-body">
+            <a href="#" ng-click="compose()" class="btn btn-compose">
+              <i class="fa fa-pencil"></i> Compose Mail
+            </a>
+            <ul class="nav nav-pills nav-stacked mail-nav">
+              <li ng-class='{ "active": route=="inbox"}'>
+                <a ng-click="changeRoute('inbox')"> <i class="fa fa-inbox"></i>Inbox
+                  <span class="label label-theme pull-right inbox-notification">3</span></a>
+              </li>
+              <li ng-class='{ "active": route=="outbox"}'>
+                <a ng-click="changeRoute('outbox')"> <i class="fa fa-envelope-o"></i>Outbox</a>
+              </li>
+              <li ng-class='{ "active": route==="star"}'>
+                <a ng-click="changeRoute('star')"> <i class="fa fa-exclamation-circle"></i>Starred</a>
+              </li>
+              <li ng-class='{ "active": route=="draft"}'>
+                <a ng-click="changeRoute('draft')"> <i class="fa fa-file-text-o"></i> Drafts <span class="label label-info pull-right inbox-notification">8</span></a>
+              </li>
+              <li ng-class='{ "active": route=="trash" }'>
+                <a ng-click="changeRoute('trash')"> <i class="fa fa-trash-o"></i>Trash</a>
+              </li>
+            </ul>
+            <a ng-click="logOut()" class="btn btn-danger btn-compose">
+              <i class="fa fa-sign-out"></i> Logout</a>
+          </div>
+        </section>
+      </div>
+      <div class="col-sm-9">
 <section class="panel">
   <header class="panel-heading wht-bg">
     <h4 class="gen-case">{{ route | uppercase }}
@@ -107,4 +140,9 @@
     </div>
   </div>
 </section>
+</div>
+</div>
 
+</section>
+<!--/wrapper ---->
+</section>
