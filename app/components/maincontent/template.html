@@ -59,7 +59,7 @@
       </div>
 
       <ul class="unstyled inbox-pagination">
-        <li><span>1-50 of 99</span></li>
+        <li><span ng-show="isInbox">{{ unreadCount }} of TOTAL</span></li>
         <li>
           <a class="np-btn" href="#"><i class="fa fa-angle-left  pagination-left"></i></a>
         </li>
@@ -73,6 +73,11 @@
         <tbody ng-repeat="email in emails | orderBy:'datetime':true">
           <tr class="unread">
             <td class="inbox-small-cells"><input type="checkbox" class="mail-checkbox"></td>
+            <td ng-show="isInbox" class="view-message">
+              <button ng-show="unread(email)" class="btn btn-warning">New!</button></td>
+            <td ng-show="isInbox" class="view-message">
+              <button ng-show="!unread(email)" ng-click="setUnread(email.id)" class="btn btn-default">
+                <span class="fa fa-undo"></span></button></td>
             <td class="view-message">
 			  <button ng-click="toggleStar(email)" class="btn btn-default" ng-class="{ 'btn-warning': isStarred(email) }">
 				<span class="fa fa-star"></span>

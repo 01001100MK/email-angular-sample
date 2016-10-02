@@ -33,6 +33,7 @@ CREATE TABLE `Draft` (
   `receiver` varchar(45) DEFAULT NULL,
   `source` varchar(10) NOT NULL DEFAULT 'draft',
   `star` tinyint(4) NOT NULL DEFAULT '0',
+  `isRead` tinyint(4) NOT NULL DEFAULT '1',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -43,7 +44,7 @@ CREATE TABLE `Draft` (
 
 LOCK TABLES `Draft` WRITE;
 /*!40000 ALTER TABLE `Draft` DISABLE KEYS */;
-INSERT INTO `Draft` VALUES (16,'2016-09-23 20:54:47','draft2','testing...','pwagyi','kit kit','draft',0),(17,'2016-09-25 20:54:56','draft1','testing...','pwagyi','lu lu','draft',1),(18,'2016-09-30 20:54:56','draft2','testing...fff','pwagyi','wut mon','draft',0);
+INSERT INTO `Draft` VALUES (16,'2016-09-23 20:54:47','draft2','testing...','pwagyi','kit kit','draft',0,1),(17,'2016-09-25 20:54:56','draft1','testing...','pwagyi','lu lu','draft',1,1),(18,'2016-09-30 20:54:56','draft2','testing...fff','pwagyi','wut mon','draft',0,1);
 /*!40000 ALTER TABLE `Draft` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -63,8 +64,9 @@ CREATE TABLE `Inbox` (
   `receiver` varchar(45) DEFAULT NULL,
   `source` varchar(10) NOT NULL DEFAULT 'inbox',
   `star` tinyint(4) NOT NULL DEFAULT '0',
+  `isRead` tinyint(4) DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -73,7 +75,7 @@ CREATE TABLE `Inbox` (
 
 LOCK TABLES `Inbox` WRITE;
 /*!40000 ALTER TABLE `Inbox` DISABLE KEYS */;
-INSERT INTO `Inbox` VALUES (9,'2016-09-21 00:00:00','inbox2','testing...','dark','pwagyi','inbox',1),(10,'2016-09-20 00:00:00','inbox1','testing...','light','pwagyi','inbox',0),(12,'2016-09-22 00:00:00','inbox3','testing...','tester','pwagyi','inbox',0);
+INSERT INTO `Inbox` VALUES (13,'2016-09-22 00:00:00','inbox3','testing...','tester','pwagyi','inbox',0,0),(14,'2016-09-21 00:00:00','inbox2','testing...','dark','pwagyi','inbox',1,0),(15,'2016-09-20 00:00:00','inbox1','testing...','light','pwagyi','inbox',0,0);
 /*!40000 ALTER TABLE `Inbox` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -93,8 +95,9 @@ CREATE TABLE `Outbox` (
   `receiver` varchar(45) DEFAULT NULL,
   `source` varchar(10) NOT NULL DEFAULT 'outbox',
   `star` tinyint(4) NOT NULL DEFAULT '0',
+  `isRead` tinyint(4) NOT NULL DEFAULT '1',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -103,7 +106,7 @@ CREATE TABLE `Outbox` (
 
 LOCK TABLES `Outbox` WRITE;
 /*!40000 ALTER TABLE `Outbox` DISABLE KEYS */;
-INSERT INTO `Outbox` VALUES (20,'2016-09-20 00:00:00','outbox2','testing...','pwagyi','phwe phwe','outbox',0),(21,'2016-09-23 00:00:00','outbox3','testing...','pwagyi','lu lu','outbox',1),(23,'2016-09-27 21:25:28','outbox1','testing...','pwagyi','hehe','outbox',0),(24,'2016-09-27 21:25:35','Love You','I love you!','pwagyi','Love','outbox',1);
+INSERT INTO `Outbox` VALUES (25,'2016-09-27 21:25:35','Love You','I love you!','pwagyi','Love','outbox',1,1),(26,'2016-09-27 21:25:28','outbox1','testing...','pwagyi','hehe','outbox',0,1),(27,'2016-09-23 00:00:00','outbox3','testing...','pwagyi','lu lu','outbox',1,1),(28,'2016-09-20 00:00:00','outbox2','testing...','pwagyi','phwe phwe','outbox',0,1);
 /*!40000 ALTER TABLE `Outbox` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -123,8 +126,9 @@ CREATE TABLE `Trash` (
   `receiver` varchar(45) DEFAULT NULL,
   `source` varchar(10) DEFAULT NULL,
   `star` tinyint(4) DEFAULT NULL,
+  `isRead` tinyint(4) NOT NULL DEFAULT '1',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -171,4 +175,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-09-28 21:28:46
+-- Dump completed on 2016-10-02 21:35:55

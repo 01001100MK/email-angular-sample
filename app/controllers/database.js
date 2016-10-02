@@ -182,7 +182,7 @@ exports.save_draft = function(req, res) {
     //     new Date() : new Date(req.body.datetime);
 
     req.body.datetime = new Date(req.body.datetime);
-    
+
     var query = connection.query('INSERT INTO Draft SET ?', req.body, function(err, result) {
         if (err) {
             console.error(err);
@@ -289,6 +289,7 @@ exports.get_star_emails = function(req, res) {
         'WHERE star = 1 UNION SELECT * FROM Draft WHERE star = 1',
         function(err, result) {
             if (err) {
+                console.error(err);
                 return res.status(400).send(err);
             } else {
                 if (result.length > 0) {
@@ -369,6 +370,48 @@ exports.star_off_draft = function(req, res) {
     var query = connection.query('UPDATE Draft SET star = 0 WHERE id = ?', req.params.id,
         function(err, result) {
             if (err) {
+                return res.status(400).send(err);
+            } else {
+                return res.status(200).send(result);
+            }
+        });
+};
+
+// Get unread count from inbox
+exports.get_unread_count = function(req, res) {
+    var query = connection.query("SELECT COUNT(isRead) AS ucount FROM Inbox WHERE isRead = 0",
+        function(err, result) {
+            if (err) {
+                console.error(err);
+                return res.status(400).send(err);
+            } else {
+                if (result.length > 0) {
+                    return res.status(200).send(result[0]);
+                } else {
+                    return res.status(201).send('');
+                }
+            }
+        });
+};
+
+// Set email to isRead = 1, read
+exports.set_read_inbox = function(req, res) {
+    var query = connection.query("UPDATE Inbox SET isRead = 1 WHERE id = ?", req.params.id,
+        function(err, result) {
+            if (err) {
+                console.error();
+                return res.status(400).send(err);
+            } else {
+                return res.status(200).send(result);
+            }
+        });
+};
+// Set email to isRead = 0, unread
+exports.set_unread_inbox = function(req, res) {
+    var query = connection.query("UPDATE Inbox SET isRead = 0 WHERE id = ?", req.params.id,
+        function(err, result) {
+            if (err) {
+                console.error();
                 return res.status(400).send(err);
             } else {
                 return res.status(200).send(result);

@@ -27,6 +27,11 @@ angular.module('app.directives.maincontent', ['inboxService', 'userService'])
 
                     // Read message
                     $scope.toDetail = function(id) {
+                        // isRead = 1, set already read
+                        Inbox.setRead(id).success(function() {
+
+                        });
+
                         $location.path('/detail/' + id);
                     }
 
@@ -36,6 +41,11 @@ angular.module('app.directives.maincontent', ['inboxService', 'userService'])
                             // Refresh email List
                             Maincontent.getEmails(route, user, function(result) {
                                 $scope.emails = result;
+
+                                // Decreased unread count by 1
+                                Inbox.getUnreadCount().success(function(res) {
+                                    $scope.unreadCount = res.ucount;
+                                });
                             });
                         });
                     };
@@ -82,6 +92,29 @@ angular.module('app.directives.maincontent', ['inboxService', 'userService'])
                         }
                     };
 
+                    // New unread inbox mails count
+                    $scope.unreadCount = 0;
+                    Inbox.getUnreadCount().success(function(res) {
+                        $scope.unreadCount = res.ucount;
+                    });
+
+                    // Check email is unread
+                    $scope.unread = function(email) {
+                        return email.isRead === 0;
+                    };
+
+                    $scope.setUnread = function(id) {
+                        Inbox.setUnread(id).success(function() {
+                            Maincontent.getEmails(route, user, function(emails) {
+                                $scope.emails = emails;
+
+                                // Unread count will increase by 1
+                                Inbox.getUnreadCount().success(function(res) {
+                                    $scope.unreadCount = res.ucount;
+                                });
+                            });
+                        });
+                    };
                 }
             ]
         };
